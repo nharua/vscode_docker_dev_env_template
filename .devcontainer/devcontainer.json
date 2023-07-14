@@ -12,29 +12,29 @@
 		// Path is relataive to the devcontainer.json file.
 		"dockerfile": "Dockerfile"
 	},
-	"settings": {
-		// "terminal.integrated.shell.linux": "/bin/zsh"
-		"terminal.integrated.defaultProfile.linux": "zsh",
-		"terminal.integrated.profiles.linux": {
-			"zsh": {
-				"path": "/bin/zsh"
-			}
-		}
-	},
+	// "settings": {
+	// 	"terminal.integrated.shell.linux": "/bin/zsh"
+	// "terminal.integrated.defaultProfile.linux": "zsh",
+	// "terminal.integrated.profiles.linux": {
+	// 	"zsh": {
+	// 		"path": "/bin/zsh"
+	// 	}
+	// }
+	// },
 	// Features to add to the dev container. More info: https://containers.dev/features.
 	// "features": {},
-	"features": {
-		"ghcr.io/devcontainers-contrib/features/zsh-plugins:0.0.4": {}
-	},
+	// "features": {
+	// 	"ghcr.io/devcontainers-contrib/features/zsh-plugins:0.0.4": {}
+	// },
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
-	"forwardPorts": [
-		5902
-	],
-	"appPort": [
-		5902
-	],
+	// "forwardPorts": [
+	// 	5902
+	// ],
+	// "appPort": [
+	// 	"5902:5902"
+	// ],
 	// Use 'postCreateCommand' to run commands after the container is created.
-	// "postCreateCommand": "pip3 install --user -r requirements.txt",
+	"postCreateCommand": "pip install --user -r requirements.txt",
 	// Configure tool-specific properties.
 	// "customizations": {},
 	"customizations": {
@@ -48,6 +48,13 @@
 				"[makefile]": {
 					"editor.insertSpaces": false,
 					"editor.detectIndentation": false
+				},
+				"terminal.integrated.shell.linux": "/usr/bin/zsh",
+				"terminal.integrated.defaultProfile.linux": "zsh",
+				"terminal.integrated.profiles.linux": {
+					"zsh": {
+						"path": "/usr/bin/zsh"
+					}
 				}
 			},
 			// Add the IDs of extensions you want installed when the container is created.
@@ -58,7 +65,20 @@
 				"ms-azuretools.vscode-docker"
 			]
 		}
-	}
+	},
 	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
-	// "remoteUser": "root"
+	"remoteUser": "docker",
+	// Using to make gui display environment in Container
+	// https://stackoverflow.com/questions/60733288/devcontainer-how-to-make-x-display-work-mount-graphics-inside-docker-in-visual
+	// https://www.youtube.com/watch?v=UEre6Bd75dw
+	// "containerEnv": {
+	// 	"DISPLAY": ":0"
+	// },
+	"mounts": [
+		"source=${localEnv:USERPROFILE}/.ssh,target=/home/docker/.ssh,type=bind,consistency=cached",
+		"source=\\\\wsl.localhost\\Ubuntu\\mnt\\wslg,target=/tmp,type=bind,consistency=cached"
+	]
+	// "runArgs": [
+	// 	"--privileged"
+	// ]
 }
